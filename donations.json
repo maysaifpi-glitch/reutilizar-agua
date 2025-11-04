@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1762295738809,
+    "name": "MARIA ROSIMEIRE GONZAGA ALVES",
+    "email": "maysamaria41@gmail.com",
+    "phone": "89999880595",
+    "city": "FLORIANO",
+    "address": "RUA ANFILOFIO MELO, 788",
+    "notes": "",
+    "materials": [
+      "Torneira/registro"
+    ],
+    "quantities": [
+      "1"
+    ],
+    "conditions": [
+      "Usado - bom estado"
+    ],
+    "status": "Aprovada",
+    "date": "04/11/2025 19:35",
+    "created_at": "2025-11-04T19:35:38.810824",
+    "updated_at": "2025-11-04T19:46:08.896988"
+  },
+  {
+    "id": 1762297797250,
+    "name": "MARIA GONZAGA ALVES",
+    "email": "maysa@gmail.com",
+    "phone": "89999880566",
+    "city": "FLORIANO",
+    "address": "",
+    "notes": "",
+    "materials": [
+      "Tela de filtragem"
+    ],
+    "quantities": [
+      "5"
+    ],
+    "conditions": [
+      "Novo"
+    ],
+    "status": "Aprovada",
+    "date": "04/11/2025 20:09",
+    "created_at": "2025-11-04T20:09:57.250652",
+    "updated_at": "2025-11-04T20:10:11.515449"
+  },
+  {
+    "id": 1762297879337,
+    "name": "Ohanna Maria Silva",
+    "email": "silva@email.com",
+    "phone": "89994562356",
+    "city": "Jerumenha",
+    "address": "",
+    "notes": "",
+    "materials": [
+      "Suporte/base",
+      "Caixa d'água"
+    ],
+    "quantities": [
+      "3",
+      "2"
+    ],
+    "conditions": [
+      "Novo",
+      "Usado - bom estado"
+    ],
+    "status": "Pendente",
+    "date": "04/11/2025 20:11",
+    "created_at": "2025-11-04T20:11:19.337472"
+  }
+]

@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reaproveitamento de Água - Doação de Materiais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #293c92 0%, #6072c1 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+
+        .intro {
+            background: #e3f2fd;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #2196F3;
+        }
+
+        .intro h2 {
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+
+        .intro ul {
+            margin-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            background: #bdc3c7;
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #3046a9 0%, #676ac9 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .step h3 {
+            display: inline-block;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .step p {
+            margin-top: 15px;
+            color: #555;
+            line-height: 1.7;
+            margin-left: 55px;
+        }
+
+        .materials-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .material-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .material-item:hover {
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .material-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .warning h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .warning ul {
+            margin-left: 20px;
+            color: #856404;
+            line-height: 1.8;
+        }
+
+        .tip {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .tip h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .tip ul {
+            margin-left: 20px;
+            color: #155724;
+            line-height: 1.8;
+        }
+
+        .diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            border: 3px dashed #667eea;
+        }
+
+        .diagram-text {
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #2c3e50;
+            text-align: left;
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Estilos para a seção de dados da crise hídrica */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .highlight {
+            background-color: #fffacd;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            background-color: #e6f2ff;
+            font-weight: bold;
+        }
+
+        .source {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Estilos para o formulário de cadastro */
+        .form-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3046a9 0%, #676ac9 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Estilos para a lista de doações */
+        .donations-list {
+            margin-top: 30px;
+        }
+
+        .donation-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #28a745;
+        }
+
+        .donation-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .donation-name {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2em;
+        }
+
+        .donation-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .donation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .donation-material {
+            background: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .donation-quantity {
+            background: #e8f5e9;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .donation-status {
+            background: #fff3cd;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .donation-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .empty-state i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Estilos para a seção de materiais selecionados */
+        .selected-materials {
+            margin: 20px 0;
+        }
+
+        .material-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .material-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .material-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .remove-material {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .material-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .add-material-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-material-btn:hover {
+            background: #218838;
+        }
+
+        .no-materials {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .materials-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .donation-header {
+                flex-direction: column;
+            }
+            
+            .donation-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .material-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💧 Sistema de Reaproveitamento de Água</h1>
+        <p class="subtitle">Guia completo para economia e sustentabilidade</p>
+
+        <div class="intro">
+            <h2>O que é e por que fazer?</h2>
+            <p style="margin-bottom: 15px;">Este sistema permite reaproveitar água de chuveiros, máquinas de lavar e pias para limpeza de pisos e irrigação de plantas, gerando:</p>
+            <ul>
+                <li><strong>Economia</strong>: Redução de até 40% na conta de água</li>
+                <li><strong>Sustentabilidade</strong>: Menor consumo de água potável</li>
+                <li><strong>Simplicidade</strong>: Sistema fácil de montar e manter</li>
+            </ul>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showContent('materiais')">📦 Materiais</button>
+            <button class="tab" onclick="showContent('montagem')">🔧 Montagem</button>
+            <button class="tab" onclick="showContent('uso')">💡 Como Usar</button>
+            <button class="tab" onclick="showContent('manutencao')">🛠️ Manutenção</button>
+            <button class="tab" onclick="showContent('dicas')">⭐ Dicas</button>
+            <button class="tab" onclick="showContent('crise')">📊 Crise Hídrica</button>
+            <button class="tab" onclick="showContent('doacao')">🤝 Doar Materiais</button>
+            <button class="tab" onclick="showContent('doacoes')">📋 Doações Recebidas</button>
+            <button class="tab" onclick="showContent('doadores')">📋 Registro de Doadores</button>
+        </div>
+
+        <div id="materiais" class="content active">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Materiais Necessários</h2>
+            
+            <div class="materials-list">
+                <div class="material-item">
+                    <strong>Recipiente de armazenamento</strong>
+                    Balde, tambor ou caixa d'água (50-200 litros)
+                </div>
+                <div class="material-item">
+                    <strong>Tela de filtragem</strong>
+                    Tela fina ou filtro de tecido (tipo voal)
+                </div>
+                <div class="material-item">
+                    <strong>Mangueira</strong>
+                    3-5 metros (para coleta e saída)
+                </div>
+                <div class="material-item">
+                    <strong>Torneira ou registro</strong>
+                    Para controlar a saída de água
+                </div>
+                <div class="material-item">
+                    <strong>Abraçadeiras</strong>
+                    Para fixar mangueiras
+                </div>
+                <div class="material-item">
+                    <strong>Suporte/base</strong>
+                    Para elevar o recipiente (opcional)
+                </div>
+            </div>
+
+            <div class="tip">
+                <h3>💰 Custo Estimado</h3>
+                <ul>
+                    <li>Sistema básico: R$ 50-100</li>
+                    <li>Sistema intermediário: R$ 100-200</li>
+                    <li>Sistema avançado: R$ 200-500</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="montagem" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Passo a Passo da Montagem</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <h3>Escolha do Local</h3>
+                <p>Selecione um local próximo à fonte de água (chuveiro, máquina de lavar ou pia) e perto das áreas onde a água será usada. O local deve ser protegido do sol direto e ter boa ventilação.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <h3>Preparação do Recipiente</h3>
+                <p>Lave bem o recipiente com água e sabão. Faça um furo próximo ao fundo (5-10cm da base) para instalar a torneira ou registro. Se for usar tampa, faça um furo na parte superior para entrada da mangueira.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <h3>Instalação da Torneira</h3>
+                <p>Instale a torneira no furo inferior usando vedante ou borracha de vedação. Aperte bem para evitar vazamentos. Teste a vedação enchendo com água.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <h3>Sistema de Filtragem</h3>
+                <p>Coloque uma tela fina ou tecido (voal) na entrada do recipiente para filtrar sujeiras grosseiras como cabelos, folhas e resíduos maiores. Fixe com elástico ou abraçadeira.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <h3>Conexão da Mangueira de Entrada</h3>
+                <p>Conecte a mangueira da fonte de água (saída do chuveiro, máquina de lavar ou pia) até o recipiente. Passe a mangueira pelo filtro. Use abraçadeiras para fixar bem.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <h3>Elevação do Recipiente (Opcional)</h3>
+                <p>Se possível, coloque o recipiente sobre uma base elevada (blocos, suporte). Isso facilita o uso por gravidade e melhora o fluxo de água na saída.</p>
+            </div>
+
+            <div class="diagram">
+                <h3 style="margin-bottom: 20px; color: #667eea;">Diagrama do Sistema</h3>
+                <pre class="diagram-text">
+    [FONTE DE ÁGUA]
+    (Chuveiro/Máquina)
+           |
+           | Mangueira
+           ↓
+      [FILTRO] ← Tela/Tecido
+           |
+           ↓
+    ┌─────────────┐
+    │             │
+    │ RECIPIENTE  │ ← Tampa (opcional)
+    │ DE COLETA   │
+    │             │
+    │             │
+    └──────┬──────┘
+           |
+      [TORNEIRA] ← 5-10cm do fundo
+           |
+           ↓
+    [USO: Limpeza/Irrigação]
+                </pre>
+            </div>
+        </div>
+
+        <div id="uso" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Como Usar o Sistema</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <h3>Coleta de Água Cinza</h3>
+                <p><strong>Águas aproveitáveis:</strong> água do banho (enquanto esquenta), água do enxágue da máquina de lavar, água de lavagem de legumes e frutas.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <h3>Para Limpeza de Pisos</h3>
+                <p>Use baldes para pegar a água pela torneira. Misture com produtos de limpeza normalmente. Ideal para quintais, garagens, calçadas e áreas externas.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <h3>Para Irrigação de Plantas</h3>
+                <p>Use regadores ou conecte mangueira na torneira. Irrigue de preferência no início da manhã ou final da tarde. Evite molhar as folhas diretamente.</p>
+            </div>
+
+            <div class="warning">
+                <h3>⚠️ Águas que NÃO devem ser aproveitadas:</h3>
+                <ul>
+                    <li>Água com fezes (vaso sanitário)</li>
+                    <li>Água com produtos químicos pesados</li>
+                    <li>Água com alvejante ou água sanitária em grande quantidade</li>
+                    <li>Água com óleo ou gordura</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h3>⚠️ Restrições de Uso:</h3>
+                <ul>
+                    <li><strong>NÃO use</strong> para beber, cozinhar ou lavar louças</li>
+                    <li><strong>NÃO use</strong> em hortas de alimentos que serão consumidos crus</li>
+                    <li><strong>NÃO use</strong> para higiene pessoal</li>
+                    <li><strong>Use dentro de 24h</strong> para evitar proliferação de bactérias</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="manutencao" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Manutenção do Sistema</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <h3>Limpeza Semanal</h3>
+                <p>Limpe o filtro removendo cabelos, folhas e sujeiras. Lave com água corrente. Se usar tecido, lave com sabão e deixe secar ao sol.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <h3>Limpeza Mensal</h3>
+                <p>Esvazie completamente o recipiente. Lave o interior com escova, água e sabão neutro. Enxágue bem. Verifique vedações e apertos.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <h3>Verificações</h3>
+                <p>Confira mangueiras quanto a furos ou rachaduras. Teste a torneira para vazamentos. Observe se há mau cheiro (indicando necessidade de limpeza).</p>
+            </div>
+
+            <div class="tip">
+                <h3>🌟 Dica Importante</h3>
+                <ul>
+                    <li>Adicione algumas gotas de vinagre na água armazenada para evitar mau cheiro</li>
+                    <li>Mantenha o recipiente sempre tampado para evitar mosquitos</li>
+                    <li>Não deixe água parada por mais de 2-3 dias</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="dicas" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Dicas e Otimizações</h2>
+
+            <div class="tip">
+                <h3>💡 Maximize a Economia</h3>
+                <ul>
+                    <li>Coloque um balde no chuveiro enquanto a água esquenta</li>
+                    <li>Use água do enxágue da máquina (mais limpa)</li>
+                    <li>Reaproveite água de lavagem de vegetais</li>
+                    <li>Instale múltiplos pontos de coleta</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <h3>🌱 Para Irrigação Inteligente</h3>
+                <ul>
+                    <li>Use água com sabão biodegradável (não faz mal às plantas)</li>
+                    <li>Evite água muito quente ou com muito sabão</li>
+                    <li>Irrigue árvores, gramados e plantas ornamentais</li>
+                    <li>Crie um sistema de gotejamento com mangueira furada</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <h3>⚡ Melhorias Avançadas</h3>
+                <ul>
+                    <li><strong>Sistema multi-estágio:</strong> Use 2 recipientes - primeiro para decantar, segundo para uso</li>
+                    <li><strong>Filtro de areia:</strong> Adicione camadas de areia, brita e carvão para melhor filtragem</li>
+                    <li><strong>Bomba manual:</strong> Instale bomba para maior pressão</li>
+                    <li><strong>Captação de chuva:</strong> Combine com calhas para captar água de chuva</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-number">📊</span>
+                <h3>Economia Estimada</h3>
+                <p>Uma família de 4 pessoas pode economizar cerca de 80-120 litros de água por dia (2.400-3.600 litros/mês) com este sistema, resultando em economia de 15-30% na conta de água!</p>
+            </div>
+        </div>
+
+        <div id="crise" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Crise Hídrica no Brasil: Dados e Tendências (2024-2025)</h2>
+            
+            <table>
+                <tr class="section-title">
+                    <td colspan="2">Consumo de Água no Brasil (Dados e Tendências 2024-2025)</td>
+                </tr>
+                <tr>
+                    <th>Indicador</th>
+                    <th>Dados/Informações</th>
+                </tr>
+                <tr>
+                    <td>Consumo por Setor</td>
+                    <td>
+                        <ul>
+                            <li>Agricultura (irrigação): 49,8% a 50,5% da retirada total de água</li>
+                            <li>Abastecimento urbano: 24,3%</li>
+                            <li>Indústria: 9,7%</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Acesso à Água</td>
+                    <td>Cerca de 33 milhões de brasileiros ainda não têm acesso à água potável</td>
+                </tr>
+                <tr>
+                    <td>Tendências de Consumo</td>
+                    <td>Projeção da ANA: consumo de água no Brasil deve crescer 24% até 2030</td>
+                </tr>
+                <tr>
+                    <td>Metas de Eficiência</td>
+                    <td>Instituições como o STF estabeleceram metas para reduzir o consumo médio anual em 3% até 2025</td>
+                </tr>
+                
+                <tr class="section-title">
+                    <td colspan="2">Impactos do Desperdício</td>
+                </tr>
+                <tr>
+                    <th>Indicador</th>
+                    <th>Dados/Informações</th>
+                </tr>
+                <tr>
+                    <td>Índices de Perda (2022)</td>
+                    <td>
+                        <ul>
+                            <li>Brasil: 37,8% (queda em relação aos 40,3% de 2021)</li>
+                            <li>Países desenvolvidos (média): 15%</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Volume Desperdiçado</td>
+                    <td>Água potável perdida anualmente poderia abastecer mais de 54 milhões de habitantes por ano</td>
+                </tr>
+                <tr>
+                    <td>Principais Causas do Desperdício</td>
+                    <td>Vazamentos físicos, fraudes e erros de medição</td>
+                </tr>
+                
+                <tr class="section-title">
+                    <td colspan="2">Consequências da Crise Hídrica</td>
+                </tr>
+                <tr>
+                    <th>Indicador</th>
+                    <th>Dados/Informações</th>
+                </tr>
+                <tr>
+                    <td>Escassez e Racionamento</td>
+                    <td>
+                        <ul>
+                            <li>Previsão: Brasil poderá enfrentar, em média, 12 dias de racionamento de água por ano até 2050</li>
+                            <li>Regiões mais afetadas: Nordeste e Centro-Oeste (mais de 30 dias de racionamento)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Eventos Climáticos Extremos</td>
+                    <td>Relatórios da ONU (2024) indicam secas prolongadas na Amazônia e enchentes no Sul do Brasil</td>
+                </tr>
+                <tr>
+                    <td>Impacto na Saúde (2024)</td>
+                    <td>Mais de 344 mil internações por doenças relacionadas à falta de saneamento básico adequado</td>
+                </tr>
+            </table>
+            
+            <p class="highlight">O cenário aponta para a urgência de investimentos em infraestrutura e na gestão mais eficiente dos recursos hídricos para mitigar os impactos futuros.</p>
+            
+            <div class="source">
+                Fontes: Sistema Nacional de Informações sobre Saneamento (SNIS), Agência Nacional de Águas e Saneamento Básico (ANA), Relatórios da ONU (2024)
+            </div>
+        </div>
+
+<div id="doacao" class="content">
+    <h2 style="color: #2c3e50; margin-bottom: 20px;">Cadastro para Doação de Materiais</h2>
+    
+    <div class="form-container">
+        <h3 class="form-title">Informe os materiais que você pode doar</h3>
+        
+        <form id="donationForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Nome Completo *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Telefone *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">Cidade *</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="address">Endereço (opcional)</label>
+                <input type="text" id="address" name="address">
+            </div>
+            
+            <div class="form-group">
+                <label>Materiais para Doação *</label>
+                <div class="selected-materials" id="selectedMaterials">
+                    <div class="no-materials" id="noMaterialsMessage">
+                        Nenhum material selecionado. Clique em "Adicionar Material" para começar.
+                    </div>
+                </div>
+                <button type="button" class="add-material-btn" onclick="addMaterial()">
+                    <span>+</span> Adicionar Material
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <label for="notes">Observações</label>
+                <textarea id="notes" name="notes" rows="3" placeholder="Informações adicionais sobre os materiais, disponibilidade para entrega, etc."></textarea>
+            </div>
+            
+            <button type="submit" class="btn">Cadastrar Doação</button>
+        </form>
+    </div>
+</div>
+
+        <div id="doacoes" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">Doações Recebidas</h2>
+            
+            <div class="donations-list" id="donationsList">
+                <!-- As doações serão carregadas aqui via JavaScript -->
+            </div>
+        </div>
+    </div>
+        <div id="doadores" class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">📋 Registro Completo de Doadores</h2>
+            <p style="margin-bottom: 20px; color: #666;">Aqui você vê todas as doações já realizadas, incluindo as aprovadas.</p>
+    
+        <div class="stats-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 1.5em; font-weight: bold; color: #1976d2;">0</div>
+            <div>Total de Doações</div>
+        </div>
+        <div style="background: #fff3cd; padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 1.5em; font-weight: bold; color: #856404;">0</div>
+            <div>Pendentes</div>
+        </div>
+        <div style="background: #d4edda; padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 1.5em; font-weight: bold; color: #155724;">0</div>
+            <div>Aprovadas</div>
+        </div>
+        <div style="background: #f8d7da; padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 1.5em; font-weight: bold; color: #721c24;">0</div>
+            <div>Anônimas</div>
+        </div>
+    </div>
+    
+    <div class="donors-list" id="donorsList">
+        <!-- O registro de doadores será carregado aqui -->
+    </div>
+</div>
+    <!-- Template para o formulário de material -->
+    <template id="materialTemplate">
+        <div class="material-card">
+            <div class="material-card-header">
+                <div class="material-name">Material #<span class="material-index">1</span></div>
+                <button type="button" class="remove-material" onclick="removeMaterial(this)">×</button>
+            </div>
+            <div class="material-details">
+                <div class="form-group">
+                    <label>Material *</label>
+                    <select name="materials[]" required>
+                        <option value="">Selecione um material</option>
+                        <option value="Balde/tambor">Balde ou tambor (50-200 litros)</option>
+                        <option value="Tela de filtragem">Tela de filtragem (tipo voal)</option>
+                        <option value="Mangueira">Mangueira (3-5 metros)</option>
+                        <option value="Torneira/registro">Torneira ou registro</option>
+                        <option value="Abraçadeiras">Abraçadeiras</option>
+                        <option value="Suporte/base">Suporte ou base para elevar recipiente</option>
+                        <option value="Caixa d'água">Caixa d'água</option>
+                        <option value="Outro">Outro (especifique nas observações)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quantidade *</label>
+                    <input type="number" name="quantities[]" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Condição *</label>
+                    <select name="conditions[]" required>
+                        <option value="">Selecione a condição</option>
+                        <option value="Novo">Novo</option>
+                        <option value="Usado - bom estado">Usado - bom estado</option>
+                        <option value="Usado - precisa de reparo">Usado - precisa de reparo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+<script>
+    const API_BASE = 'http://localhost:5000/api';
+
+    // Função para alternar entre as abas
+    function showContent(id) {
+        // Esconde todos os conteúdos
+        const contents = document.querySelectorAll('.content');
+        contents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Remove active de todas as tabs
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Mostra o conteúdo selecionado
+        document.getElementById(id).classList.add('active');
+
+        // Marca a tab como ativa
+        event.target.classList.add('active');
+
+        // Carrega o conteúdo específico de cada aba
+        if (id === 'doacoes') {
+            loadActiveDonations();
+        } else if (id === 'doadores') {
+            loadAllDonors();
+            loadStats();
+        }
+    }
+
+    // Gerenciamento de materiais no formulário
+    let materialCount = 0;
+
+    function addMaterial() {
+        const template = document.getElementById('materialTemplate');
+        const clone = template.content.cloneNode(true);
+        const materialCard = clone.querySelector('.material-card');
+        
+        materialCount++;
+        materialCard.querySelector('.material-index').textContent = materialCount;
+        
+        const selectedMaterials = document.getElementById('selectedMaterials');
+        const noMaterialsMessage = document.getElementById('noMaterialsMessage');
+        
+        if (noMaterialsMessage) {
+            noMaterialsMessage.style.display = 'none';
+        }
+        
+        selectedMaterials.appendChild(materialCard);
+    }
+
+    function removeMaterial(button) {
+        const materialCard = button.closest('.material-card');
+        materialCard.remove();
+        
+        materialCount--;
+        
+        // Atualizar índices
+        const materialCards = document.querySelectorAll('.material-card');
+        if (materialCards.length === 0) {
+            document.getElementById('noMaterialsMessage').style.display = 'block';
+        } else {
+            materialCards.forEach((card, index) => {
+                card.querySelector('.material-index').textContent = index + 1;
+            });
+        }
+    }
+
+    // Funções para comunicação com a API
+
+    // Carrega apenas doações ativas (não aprovadas)
+    async function loadActiveDonations() {
+        try {
+            const response = await fetch(`${API_BASE}/donations/active`);
+            const donations = await response.json();
+            displayDonations(donations);
+        } catch (error) {
+            console.error('Erro ao carregar doações:', error);
+            document.getElementById('donationsList').innerHTML = `
+                <div class="empty-state">
+                    <i>❌</i>
+                    <h3>Erro ao carregar doações</h3>
+                    <p>Tente recarregar a página.</p>
+                </div>
+            `;
+        }
+    }
+
+    // Carrega TODOS os doadores (registro completo)
+    async function loadAllDonors() {
+        try {
+            const response = await fetch(`${API_BASE}/donors`);
+            const donors = await response.json();
+            displayDonors(donors);
+        } catch (error) {
+            console.error('Erro ao carregar doadores:', error);
+            document.getElementById('donorsList').innerHTML = `
+                <div class="empty-state">
+                    <i>❌</i>
+                    <h3>Erro ao carregar registro de doadores</h3>
+                    <p>Tente recarregar a página.</p>
+                </div>
+            `;
+        }
+    }
+
+    // Carrega estatísticas
+    async function loadStats() {
+        try {
+            const response = await fetch(`${API_BASE}/stats`);
+            const stats = await response.json();
+            
+            document.querySelector('.stats-container').innerHTML = `
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #1976d2;">${stats.total}</div>
+                    <div>Total de Doações</div>
+                </div>
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #856404;">${stats.pending}</div>
+                    <div>Pendentes</div>
+                </div>
+                <div style="background: #d4edda; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #155724;">${stats.approved}</div>
+                    <div>Aprovadas</div>
+                </div>
+                <div style="background: #e8f4fd; padding: 15px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #1e88e5;">${stats.in_analysis}</div>
+                    <div>Em Análise</div>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Erro ao carregar estatísticas:', error);
+        }
+    }
+
+    function displayDonations(donations) {
+        const donationsList = document.getElementById('donationsList');
+        
+        if (donations.length === 0) {
+            donationsList.innerHTML = `
+                <div class="empty-state">
+                    <i>📦</i>
+                    <h3>Nenhuma doação pendente</h3>
+                    <p>Todas as doações foram aprovadas ou estão em análise.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        donationsList.innerHTML = '';
+        
+        donations.forEach(donation => {
+            const donationElement = document.createElement('div');
+            donationElement.className = 'donation-item';
+            
+            // Construir lista de materiais
+            let materialsHtml = '';
+            if (donation.materials && donation.materials.length > 0) {
+                donation.materials.forEach((material, index) => {
+                    materialsHtml += `
+                        <div class="material-card" style="margin-bottom: 10px;">
+                            <div class="material-name">${material}</div>
+                            <div class="material-details">
+                                <div class="donation-quantity">Quantidade: ${donation.quantities[index]}</div>
+                                <div class="donation-quantity">Condição: ${donation.conditions[index]}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            donationElement.innerHTML = `
+                <div class="donation-header">
+                    <div class="donation-name">${donation.name}</div>
+                    <div class="donation-date">${donation.date}</div>
+                </div>
+                <div>
+                    <strong>Contato:</strong> ${donation.email} | ${donation.phone}
+                </div>
+                <div>
+                    <strong>Cidade:</strong> ${donation.city} ${donation.address ? `| ${donation.address}` : ''}
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Materiais doados:</strong>
+                    ${materialsHtml}
+                </div>
+                ${donation.notes ? `<div style="margin-top: 10px;"><strong>Observações:</strong> ${donation.notes}</div>` : ''}
+                <div class="donation-actions">
+                    <span class="donation-status">Status: ${donation.status}</span>
+                    <button class="btn btn-small btn-success" onclick="updateDonationStatus(${donation.id}, 'Aprovada')">Aprovar</button>
+                    <button class="btn btn-small" onclick="updateDonationStatus(${donation.id}, 'Em análise')">Em Análise</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteDonation(${donation.id})">Excluir</button>
+                </div>
+            `;
+            donationsList.appendChild(donationElement);
+        });
+    }
+
+    function displayDonors(donors) {
+        const donorsList = document.getElementById('donorsList');
+        
+        if (donors.length === 0) {
+            donorsList.innerHTML = `
+                <div class="empty-state">
+                    <i>📦</i>
+                    <h3>Nenhuma doação registrada</h3>
+                    <p>As doações aparecerão aqui quando forem cadastradas.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        donorsList.innerHTML = '';
+        
+        // Ordenar por data (mais recente primeiro)
+        donors.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        donors.forEach(donor => {
+            const donorElement = document.createElement('div');
+            donorElement.className = 'donation-item';
+            
+            // Cor da borda baseada no status
+            if (donor.status === 'Aprovada') {
+                donorElement.style.borderLeftColor = '#28a745';
+            } else if (donor.status === 'Em análise') {
+                donorElement.style.borderLeftColor = '#ffc107';
+            } else {
+                donorElement.style.borderLeftColor = '#dc3545';
+            }
+            
+            // Construir lista de materiais
+            let materialsHtml = '';
+            if (donor.materials && donor.materials.length > 0) {
+                donor.materials.forEach((material, index) => {
+                    materialsHtml += `
+                        <div class="material-card" style="margin-bottom: 10px;">
+                            <div class="material-name">${material}</div>
+                            <div class="material-details">
+                                <div class="donation-quantity">Quantidade: ${donor.quantities[index]}</div>
+                                <div class="donation-quantity">Condição: ${donor.conditions[index]}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            donorElement.innerHTML = `
+                <div class="donation-header">
+                    <div class="donation-name">${donor.name}</div>
+                    <div class="donation-date">${donor.date}</div>
+                </div>
+                <div>
+                    <strong>Status:</strong> 
+                    <span style="padding: 2px 8px; border-radius: 12px; font-size: 0.8em; 
+                        ${donor.status === 'Aprovada' ? 'background: #d4edda; color: #155724;' : 
+                          donor.status === 'Em análise' ? 'background: #fff3cd; color: #856404;' : 
+                          'background: #f8d7da; color: #721c24;'}">
+                        ${donor.status}
+                    </span>
+                </div>
+                <div>
+                    <strong>Contato:</strong> ${donor.email} | ${donor.phone}
+                </div>
+                <div>
+                    <strong>Cidade:</strong> ${donor.city} ${donor.address ? `| ${donor.address}` : ''}
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Materiais doados:</strong>
+                    ${materialsHtml}
+                </div>
+                ${donor.notes ? `<div style="margin-top: 10px;"><strong>Observações:</strong> ${donor.notes}</div>` : ''}
+            `;
+            donorsList.appendChild(donorElement);
+        });
+    }
+
+    async function updateDonationStatus(donationId, status) {
+        try {
+            const response = await fetch(`${API_BASE}/donations/${donationId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: status })
+            });
+            
+            if (response.ok) {
+                // Recarrega as doações ativas (a aprovada some da lista)
+                loadActiveDonations();
+                // Atualiza o registro completo e estatísticas
+                loadAllDonors();
+                loadStats();
+            } else {
+                alert('Erro ao atualizar status da doação');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao atualizar status da doação');
+        }
+    }
+
+    async function deleteDonation(donationId) {
+        if (confirm('Tem certeza que deseja excluir esta doação?')) {
+            try {
+                const response = await fetch(`${API_BASE}/donations/${donationId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadActiveDonations();
+                    loadAllDonors();
+                    loadStats();
+                } else {
+                    alert('Erro ao excluir doação');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao excluir doação');
+            }
+        }
+    }
+
+    // Manipular envio do formulário - VERSÃO CORRIGIDA
+    document.getElementById('donationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Verificar se há materiais selecionados
+        const materialCards = document.querySelectorAll('.material-card');
+        if (materialCards.length === 0) {
+            alert('Por favor, adicione pelo menos um material para doação.');
+            return;
+        }
+        
+        // Coletar dados dos materiais CORRETAMENTE
+        const materials = [];
+        const quantities = [];
+        const conditions = [];
+        
+        materialCards.forEach(card => {
+            const materialSelect = card.querySelector('select[name="materials[]"]');
+            const quantityInput = card.querySelector('input[name="quantities[]"]');
+            const conditionSelect = card.querySelector('select[name="conditions[]"]');
+            
+            if (materialSelect && quantityInput && conditionSelect) {
+                materials.push(materialSelect.value);
+                quantities.push(quantityInput.value);
+                conditions.push(conditionSelect.value);
+            }
+        });
+        
+        // Verificar se todos os campos obrigatórios estão preenchidos
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const city = document.getElementById('city').value;
+        
+        if (!name || !email || !phone || !city) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
+        }
+        
+        const donationData = {
+            name: name,
+            email: email,
+            phone: phone,
+            city: city,
+            address: document.getElementById('address').value,
+            notes: document.getElementById('notes').value,
+            materials: materials,
+            quantities: quantities,
+            conditions: conditions
+        };
+        
+        console.log("Enviando dados:", donationData); // Para debug
+        
+        try {
+            const response = await fetch(`${API_BASE}/donations`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(donationData)
+            });
+            
+            const result = await response.json();
+            console.log("Resposta do servidor:", result); // Para debug
+            
+            if (result.success) {
+                // Limpar formulário
+                this.reset();
+                
+                // Limpar materiais selecionados
+                const selectedMaterials = document.getElementById('selectedMaterials');
+                selectedMaterials.innerHTML = '<div class="no-materials" id="noMaterialsMessage">Nenhum material selecionado. Clique em "Adicionar Material" para começar.</div>';
+                materialCount = 0;
+                
+                // Mostrar mensagem de sucesso
+                alert('Doação cadastrada com sucesso! ID: ' + result.id);
+                
+                // Atualizar todas as listas
+                loadActiveDonations();
+                loadAllDonors();
+                loadStats();
+                
+                // Ir para a aba de doações ativas
+                showContent('doacoes');
+            } else {
+                alert('Erro ao cadastrar doação: ' + (result.error || 'Erro desconhecido'));
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao cadastrar doação. Verifique se o servidor está rodando em http://localhost:5000');
+        }
+    });
+
+    // Inicializar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar conteúdo baseado na aba ativa
+        if (document.getElementById('doacoes').classList.contains('active')) {
+            loadActiveDonations();
+        } else if (document.getElementById('doadores').classList.contains('active')) {
+            loadAllDonors();
+            loadStats();
+        }
+    });
+</script>
+</body>
+</html>
